@@ -9,6 +9,7 @@
     "lint": "oxlint",
     "lint:format": "oxfmt --write",
     "lint:fix": "oxlint --fix && pnpm lint:format",
+    "lint:types": "tsc --noEmit --project ./tsconfig.app.json && tsc --noEmit --project ./tsconfig.node.json",
     "preview": "vite preview",
     "prepare": "husky"
   },
