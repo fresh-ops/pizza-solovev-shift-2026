@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "lint:format": "oxfmt . --write",
+    "lint:format": "oxfmt --write",
+    "lint:fix": "oxlint --fix && pnpm lint:format",
     "preview": "vite preview"
   },
   "dependencies": {
