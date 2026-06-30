@@ -1,0 +1,1116 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/auth/otp": {
+      "post": {
+        "operationId": "OtpsController_createOtp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "create otp",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OtpResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Создание отп кода",
+        "tags": ["☄️ otps"]
+      }
+    },
+    "/api/users/signin": {
+      "post": {
+        "operationId": "UsersController_signin",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "signin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignInResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Авторизация",
+        "tags": ["💂‍♂️ users"]
+      }
+    },
+    "/api/users/profile": {
+      "patch": {
+        "operationId": "UsersController_updateProfile",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "update profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProfileResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Обновить профиль пользователя",
+        "tags": ["💂‍♂️ users"]
+      }
+    },
+    "/api/users/session": {
+      "get": {
+        "operationId": "UsersController_session",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Получить сессию пользователя",
+        "tags": ["💂‍♂️ users"]
+      }
+    },
+    "/api/pizza/catalog": {
+      "get": {
+        "operationId": "PizzaController_getPizzasCatalog",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "catalog",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PizzasResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Получить пиццы",
+        "tags": ["🍕 pizza"]
+      }
+    },
+    "/api/pizza/payment": {
+      "post": {
+        "operationId": "PizzaController_createPizzaPayment",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePizzaPaymentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "payment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PizzaPaymentResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Оплатить корзину",
+        "tags": ["🍕 pizza"]
+      }
+    },
+    "/api/pizza/orders": {
+      "get": {
+        "operationId": "PizzaController_getPizzaOrders",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PizzaOrdersResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Получить все заказы",
+        "tags": ["🍕 pizza"]
+      }
+    },
+    "/api/pizza/orders/{orderId}": {
+      "get": {
+        "operationId": "PizzaController_getPizzaOrder",
+        "parameters": [
+          {
+            "name": "orderId",
+            "required": true,
+            "in": "path",
+            "description": "Идентификатор заказа",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PizzaOrderResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Получить заказ",
+        "tags": ["🍕 pizza"]
+      }
+    },
+    "/api/pizza/orders/cancel": {
+      "put": {
+        "operationId": "PizzaController_cancelPizzaOrder",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelPizzaOrderDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "order cancel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Отменить заказ",
+        "tags": ["🍕 pizza"]
+      }
+    }
+  },
+  "info": {
+    "title": "juniors bootcamp backend 🔥",
+    "description": "Апи для выполнения индивидуальных заданий",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [
+    {
+      "url": ""
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "CreateOtpDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "89990009999"
+          }
+        },
+        "required": ["phone"]
+      },
+      "OtpResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус запроса"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Причина ошибки"
+          },
+          "retryDelay": {
+            "type": "number",
+            "example": 120000,
+            "description": "Время запроса повторного отп кода в мс"
+          }
+        },
+        "required": ["success", "retryDelay"]
+      },
+      "SignInDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "89990009999",
+            "description": "Номер телефона"
+          },
+          "code": {
+            "type": "number",
+            "example": 345231,
+            "description": "Отп код"
+          }
+        },
+        "required": ["phone", "code"]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "ID пользователя"
+          },
+          "phone": {
+            "type": "string",
+            "example": "89990009999",
+            "description": "Номер телефона"
+          },
+          "firstname": {
+            "type": "string",
+            "example": "firstname",
+            "description": "Имя"
+          },
+          "middlename": {
+            "type": "string",
+            "example": "middlename",
+            "description": "Отчество"
+          },
+          "lastname": {
+            "type": "string",
+            "example": "lastname",
+            "description": "Фамилия"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@gmail.com",
+            "description": "Почта"
+          },
+          "city": {
+            "type": "string",
+            "example": "city",
+            "description": "Город"
+          }
+        },
+        "required": ["_id", "phone"]
+      },
+      "SignInResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус запроса"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Причина ошибки"
+          },
+          "user": {
+            "description": "Пользователь",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          },
+          "token": {
+            "type": "string",
+            "description": "Пользовательский токен"
+          }
+        },
+        "required": ["success", "user", "token"]
+      },
+      "UpdateProfileProfileDto": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "example": "firstname",
+            "description": "Имя"
+          },
+          "middlename": {
+            "type": "string",
+            "example": "middlename",
+            "description": "Отчество"
+          },
+          "lastname": {
+            "type": "string",
+            "example": "lastname",
+            "description": "Фамилия"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@gmail.com",
+            "description": "Почта"
+          },
+          "city": {
+            "type": "string",
+            "example": "city",
+            "description": "Город"
+          }
+        }
+      },
+      "UpdateProfileDto": {
+        "type": "object",
+        "properties": {
+          "profile": {
+            "description": "Данные пользователя",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UpdateProfileProfileDto"
+              }
+            ]
+          },
+          "phone": {
+            "type": "string",
+            "example": "89990009999",
+            "description": "Номер телефона"
+          }
+        },
+        "required": ["profile", "phone"]
+      },
+      "UpdateProfileResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус запроса"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Причина ошибки"
+          },
+          "user": {
+            "description": "Пользователь",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          }
+        },
+        "required": ["success", "user"]
+      },
+      "SessionResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус запроса"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Причина ошибки"
+          },
+          "user": {
+            "description": "Пользователь",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          }
+        },
+        "required": ["success", "user"]
+      },
+      "Ingredient": {
+        "type": "string",
+        "enum": [
+          "pineapple",
+          "mozzarella",
+          "pepperoni",
+          "green_pepper",
+          "mushrooms",
+          "basil",
+          "cheddar",
+          "parmesan",
+          "feta",
+          "ham",
+          "pickle",
+          "tomato",
+          "bacon",
+          "onion",
+          "chile",
+          "shrimp",
+          "chicken_fillet",
+          "meatballs"
+        ],
+        "description": "Идентификатор ингредиента"
+      },
+      "PizzaIngredient": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "example": "pineapple",
+            "description": "Идентификатор ингредиента",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Ingredient"
+              }
+            ]
+          },
+          "price": {
+            "type": "number",
+            "description": "Цена ингредиента"
+          },
+          "img": {
+            "type": "string",
+            "description": "Изображение ингредиента"
+          }
+        },
+        "required": ["type", "price", "img"]
+      },
+      "Size": {
+        "type": "string",
+        "enum": ["small", "medium", "large"],
+        "description": "Идентификатор размера пиццы"
+      },
+      "PizzaSize": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "example": "small",
+            "description": "Идентификатор размера пиццы",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Size"
+              }
+            ]
+          },
+          "price": {
+            "type": "number",
+            "description": "Цена пиццы"
+          }
+        },
+        "required": ["type", "price"]
+      },
+      "Dough": {
+        "type": "string",
+        "enum": ["thin", "thick"],
+        "description": "Идентификатор типа теста"
+      },
+      "PizzaDough": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "example": "thin",
+            "description": "Идентификатор типа теста",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Dough"
+              }
+            ]
+          },
+          "price": {
+            "type": "number",
+            "description": "Цена теста"
+          }
+        },
+        "required": ["type", "price"]
+      },
+      "Pizza": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1",
+            "description": "Идентификатор пиццы"
+          },
+          "name": {
+            "type": "string",
+            "description": "Название пиццы"
+          },
+          "ingredients": {
+            "description": "Ингредиенты",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PizzaIngredient"
+            }
+          },
+          "toppings": {
+            "description": "Топпинги",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PizzaIngredient"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание пиццы"
+          },
+          "sizes": {
+            "description": "Размеры пиццы",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PizzaSize"
+            }
+          },
+          "doughs": {
+            "description": "Тип теста",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PizzaDough"
+            }
+          },
+          "calories": {
+            "type": "number",
+            "description": "Количество калорий"
+          },
+          "protein": {
+            "type": "string",
+            "description": "Количество белков"
+          },
+          "totalFat": {
+            "type": "string",
+            "description": "Количество жиров"
+          },
+          "carbohydrates": {
+            "type": "string",
+            "description": "Количество углеводов"
+          },
+          "sodium": {
+            "type": "string",
+            "description": "Количество натрия"
+          },
+          "allergens": {
+            "description": "Список аллергенов",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isVegetarian": {
+            "type": "boolean",
+            "description": "Для вегетарианцев"
+          },
+          "isGlutenFree": {
+            "type": "boolean",
+            "description": "Наличие глютена"
+          },
+          "isNew": {
+            "type": "boolean",
+            "description": "Новинка"
+          },
+          "isHit": {
+            "type": "boolean",
+            "description": "Хит"
+          },
+          "img": {
+            "type": "string",
+            "description": "Изображение пиццы"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "ingredients",
+          "toppings",
+          "description",
+          "sizes",
+          "doughs",
+          "calories",
+          "protein",
+          "totalFat",
+          "carbohydrates",
+          "sodium",
+          "allergens",
+          "isVegetarian",
+          "isGlutenFree",
+          "isNew",
+          "isHit",
+          "img"
+        ]
+      },
+      "PizzasResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус запроса"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Причина ошибки"
+          },
+          "catalog": {
+            "description": "Пиццы",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Pizza"
+            }
+          }
+        },
+        "required": ["success", "catalog"]
+      },
+      "CreatePizzaPaymentAddressDto": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "example": "street",
+            "description": "Улица"
+          },
+          "house": {
+            "type": "string",
+            "example": "house",
+            "description": "Номер дома"
+          },
+          "apartment": {
+            "type": "string",
+            "example": "apartment",
+            "description": "Номер квартиры"
+          },
+          "comment": {
+            "type": "string",
+            "example": "comment",
+            "description": "Комментарий"
+          }
+        },
+        "required": ["street", "house", "apartment"]
+      },
+      "CreatePizzaPaymentPersonDto": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "example": "firstname",
+            "description": "Имя"
+          },
+          "lastname": {
+            "type": "string",
+            "example": "lastname",
+            "description": "Фамилия"
+          },
+          "middlename": {
+            "type": "string",
+            "example": "middlename",
+            "description": "Отчество"
+          },
+          "phone": {
+            "type": "string",
+            "example": "89990009999",
+            "description": "Телефон"
+          }
+        },
+        "required": ["firstname", "lastname", "phone"]
+      },
+      "CreatePizzaPaymentDebitCardDto": {
+        "type": "object",
+        "properties": {
+          "pan": {
+            "type": "string",
+            "example": "1111 1111",
+            "description": "Номер карты"
+          },
+          "expireDate": {
+            "type": "string",
+            "example": "11/11",
+            "description": "Срок действие карты"
+          },
+          "cvv": {
+            "type": "string",
+            "example": "111",
+            "description": "Код карты"
+          }
+        },
+        "required": ["pan", "expireDate", "cvv"]
+      },
+      "OrderedPizza": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1",
+            "description": "Идентификатор пиццы"
+          },
+          "toppings": {
+            "type": "array",
+            "example": ["pineapple", "chile"],
+            "description": "Топпинги",
+            "items": {
+              "$ref": "#/components/schemas/Ingredient"
+            }
+          },
+          "size": {
+            "description": "Размер пиццы",
+            "example": "small",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Size"
+              }
+            ]
+          },
+          "dough": {
+            "description": "Тип теста",
+            "example": "thin",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Dough"
+              }
+            ]
+          }
+        },
+        "required": ["id", "toppings", "size", "dough"]
+      },
+      "CreatePizzaPaymentDto": {
+        "type": "object",
+        "properties": {
+          "receiverAddress": {
+            "description": "Адрес доставки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreatePizzaPaymentAddressDto"
+              }
+            ]
+          },
+          "person": {
+            "description": "Данные пользователя",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreatePizzaPaymentPersonDto"
+              }
+            ]
+          },
+          "debitCard": {
+            "description": "Банковская карта",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CreatePizzaPaymentDebitCardDto"
+              }
+            ]
+          },
+          "pizzas": {
+            "description": "Пиццы",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderedPizza"
+            }
+          }
+        },
+        "required": ["receiverAddress", "person", "debitCard", "pizzas"]
+      },
+      "PizzaPerson": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "example": "firstname",
+            "description": "Имя"
+          },
+          "lastname": {
+            "type": "string",
+            "example": "lastname",
+            "description": "Фамилия"
+          },
+          "middlename": {
+            "type": "string",
+            "example": "middlename",
+            "description": "Отчество"
+          },
+          "phone": {
+            "type": "string",
+            "example": "89990009999",
+            "description": "Телефон"
+          }
+        },
+        "required": ["firstname", "lastname", "middlename", "phone"]
+      },
+      "PizzaAddress": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "example": "street",
+            "description": "Улица"
+          },
+          "house": {
+            "type": "string",
+            "example": "house",
+            "description": "Номер дома"
+          },
+          "apartment": {
+            "type": "string",
+            "example": "apartment",
+            "description": "Номер квартиры"
+          },
+          "comment": {
+            "type": "string",
+            "example": "comment",
+            "description": "Комментарий"
+          }
+        },
+        "required": ["street", "house", "apartment", "comment"]
+      },
+      "PizzaStatus": {
+        "type": "string",
+        "enum": ["in_processing", "waiting_courier", "on_my_way", "success", "canceled"],
+        "description": "Статус доставки"
+      },
+      "PizzaOrder": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "ID заказа"
+          },
+          "pizzas": {
+            "description": "Пиццы",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Pizza"
+            }
+          },
+          "totalPrice": {
+            "type": "number",
+            "description": "Сумма заказа"
+          },
+          "person": {
+            "description": "Данные пользователя",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PizzaPerson"
+              }
+            ]
+          },
+          "receiverAddress": {
+            "description": "Адрес доставки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PizzaAddress"
+              }
+            ]
+          },
+          "status": {
+            "description": "Статус доставки",
+            "example": "in_processing",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PizzaStatus"
+              }
+            ]
+          },
+          "cancellable": {
+            "type": "boolean",
+            "description": "Статус отмены"
+          }
+        },
+        "required": [
+          "_id",
+          "pizzas",
+          "totalPrice",
+          "person",
+          "receiverAddress",
+          "status",
+          "cancellable"
+        ]
+      },
+      "PizzaPaymentResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус запроса"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Причина ошибки"
+          },
+          "order": {
+            "description": "Доставка",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PizzaOrder"
+              }
+            ]
+          }
+        },
+        "required": ["success", "order"]
+      },
+      "PizzaOrdersResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус запроса"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Причина ошибки"
+          },
+          "orders": {
+            "description": "Доставки",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PizzaOrder"
+            }
+          }
+        },
+        "required": ["success", "orders"]
+      },
+      "PizzaOrderResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус запроса"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Причина ошибки"
+          },
+          "order": {
+            "description": "Доставки",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PizzaOrder"
+              }
+            ]
+          }
+        },
+        "required": ["success", "order"]
+      },
+      "CancelPizzaOrderDto": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "description": "Идентификатор заказа"
+          }
+        },
+        "required": ["orderId"]
+      },
+      "BaseResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Статус запроса"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Причина ошибки"
+          }
+        },
+        "required": ["success"]
+      }
+    }
+  }
+}
