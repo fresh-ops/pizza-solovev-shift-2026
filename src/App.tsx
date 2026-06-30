@@ -1,5 +1,13 @@
+import { MantineProvider } from "@mantine/core";
+
+import { CatalogPage } from "./pages/catalog";
+
 function App() {
-  return <h1>Hello World!</h1>;
+  return (
+    <MantineProvider>
+      <CatalogPage />
+    </MantineProvider>
+  );
 }
 
 export default App;
