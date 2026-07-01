@@ -1,11 +1,16 @@
 import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
+import { QueryClientProvider } from "@tanstack/react-query";
 
-import { CatalogPage } from "./pages/catalog";
+import { CatalogPage } from "@/pages/catalog";
+import { queryClient } from "@/shared/api";
 
 function App() {
   return (
     <MantineProvider>
-      <CatalogPage />
+      <QueryClientProvider client={queryClient}>
+        <CatalogPage />
+      </QueryClientProvider>
     </MantineProvider>
   );
 }
