@@ -8,11 +8,12 @@ import { PizzaCardPrice } from "./PizzaCardPrice";
 
 export interface PizzaCardProps {
   pizza: Pizza;
+  onClick?: () => void;
 }
 
-export const PizzaCard = ({ pizza }: PizzaCardProps) => {
+export const PizzaCard = ({ pizza, onClick }: PizzaCardProps) => {
   return (
-    <Stack>
+    <Stack onClick={onClick}>
       <Image src={getAssetUrl(pizza.img)} />
       <Stack justify="space-between" flex={1}>
         <PizzaCardDescription pizza={pizza} />

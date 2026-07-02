@@ -6,13 +6,14 @@ import { PizzaCard } from "./PizzaCard";
 
 export interface PizzasCatalogProps {
   pizzas: Pizza[];
+  onPizzaSelect: (pizza: Pizza) => void;
 }
 
-export const PizzasCatalog = ({ pizzas }: PizzasCatalogProps) => {
+export const PizzasCatalog = ({ pizzas, onPizzaSelect }: PizzasCatalogProps) => {
   return (
     <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }} spacing="md">
       {pizzas.map((p) => (
-        <PizzaCard pizza={p} key={p.id} />
+        <PizzaCard pizza={p} onClick={() => onPizzaSelect(p)} key={p.id} />
       ))}
     </SimpleGrid>
   );
