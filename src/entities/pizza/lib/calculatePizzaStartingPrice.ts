@@ -1,4 +1,6 @@
 import type { Pizza } from "../model/Pizza";
 
 export const calculatePizzaStartingPrice = (pizza: Pizza) =>
-  pizza.ingredients.map((ingredient) => ingredient.price).reduce((sum, price) => sum + price);
+  pizza.sizes
+    .map((size) => size.price)
+    .reduce((minPrice, price) => (minPrice > price ? price : minPrice));
