@@ -1,4 +1,4 @@
-import { MantineProvider } from "@mantine/core";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -6,9 +6,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CatalogPage } from "@/pages/catalog";
 import { queryClient } from "@/shared/api";
 
+<ColorSchemeScript defaultColorScheme="auto" />;
+
 function App() {
   return (
-    <MantineProvider>
+    <MantineProvider defaultColorScheme="auto">
       <QueryClientProvider client={queryClient}>
         <CatalogPage />
         <ReactQueryDevtools initialIsOpen={false} />
