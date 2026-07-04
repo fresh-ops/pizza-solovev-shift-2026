@@ -6,12 +6,12 @@ import type { Pizza } from "@/shared/api";
 
 import { ErrorMessage } from "@/shared/ui";
 
-import { usePizzasCatalogQuery } from "../lib/usePizzasCatalogQuery";
+import { useGetPizzasCatalogQuery } from "../lib/useGetPizzasCatalogQuery";
 import { PizzaCard } from "./PizzaCard";
 import { PizzaModal } from "./PizzaModal";
 
 export const CatalogPage = () => {
-  const { data, error, isError } = usePizzasCatalogQuery();
+  const { data, error, isError } = useGetPizzasCatalogQuery();
   const [selectedPizza, setSelectedPizza] = useState<Pizza>();
   const [opened, { open, close }] = useDisclosure(false);
 
