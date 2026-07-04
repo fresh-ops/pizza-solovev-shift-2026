@@ -8,15 +8,13 @@ import { queryClient } from "@/shared/api";
 
 <ColorSchemeScript defaultColorScheme="auto" />;
 
-function App() {
-  return (
-    <MantineProvider defaultColorScheme="auto">
-      <QueryClientProvider client={queryClient}>
-        <CatalogPage />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </MantineProvider>
-  );
-}
+const App = () => (
+  <MantineProvider defaultColorScheme="auto">
+    <QueryClientProvider client={queryClient}>
+      <CatalogPage />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  </MantineProvider>
+);
 
 export default App;
