@@ -6,10 +6,9 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CatalogPage } from "@/pages/catalog";
 import { queryClient } from "@/shared/api";
 
-<ColorSchemeScript defaultColorScheme="auto" />;
-
 const App = () => (
   <MantineProvider defaultColorScheme="auto">
+    <ColorSchemeScript defaultColorScheme="auto" />
     <QueryClientProvider client={queryClient}>
       <CatalogPage />
       <ReactQueryDevtools initialIsOpen={false} />
