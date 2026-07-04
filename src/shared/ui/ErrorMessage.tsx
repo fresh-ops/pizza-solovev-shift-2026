@@ -6,12 +6,8 @@ export interface ErrorMessageProps extends TextProps {
   error?: Error;
 }
 
-export const ErrorMessage = ({ error, ...props }: ErrorMessageProps) => {
-  return (
-    <Text {...props}>
-      {error && error instanceof ApiError
-        ? `Ошибка: ${error.reason}`
-        : "Упс... Что-то пошло не так"}
-    </Text>
-  );
-};
+export const ErrorMessage = ({ error, ...props }: ErrorMessageProps) => (
+  <Text {...props}>
+    {error && error instanceof ApiError ? `Ошибка: ${error.reason}` : "Упс... Что-то пошло не так"}
+  </Text>
+);
