@@ -1,14 +1,11 @@
-import { Button, Group, Image, SimpleGrid, Stack, Text } from "@mantine/core";
-import { useState } from "react";
+import { Button, Group, Image, SegmentedControl, SimpleGrid, Stack, Text } from "@mantine/core";
+import { useMemo, useState } from "react";
 
-import type { Pizza } from "@/shared/api";
+import type { OrderedPizza, Pizza } from "@/shared/api";
 
 import { getAssetUrl, toggleArrayItem } from "@/shared/lib";
 
 import { calculateOrderedPizzaPrice } from "../../lib/calculateOrderedPizzaPrice";
-import { getDefaultOrderedPizzaFor } from "../../lib/getDefaultOrderedPizzaFor";
-import { PizzaDough } from "./PizzaDough";
-import { PizzaSizeControl } from "./PizzaSizeControl";
 import { PizzaToppingCard } from "./PizzaToppingCard";
 
 export interface PizzaModalContentProps {
@@ -16,8 +13,16 @@ export interface PizzaModalContentProps {
 }
 
 export const PizzaModalContent = ({ pizza }: PizzaModalContentProps) => {
-  const [orderingPizza, setOrderingPizza] = useState(getDefaultOrderedPizzaFor(pizza));
-  const price = calculateOrderedPizzaPrice(orderingPizza, pizza);
+  const [orderingPizza, setOrderingPizza] = useState<OrderedPizza>({
+    id: pizza.id,
+    toppings: [],
+    size: "small",
+    dough: "thin",
+  });
+  const price = useMemo(
+    () => calculateOrderedPizzaPrice(orderingPizza, pizza),
+    [orderingPizza, pizza],
+  );
 
   return (
     <Group align="flex-start">
@@ -26,23 +31,28 @@ export const PizzaModalContent = ({ pizza }: PizzaModalContentProps) => {
         <Text size="lg" fw={700}>
           {pizza.name}
         </Text>
-        <PizzaDough orderedPizza={orderingPizza} />
+        <Text>
+          {orderingPizza.dough}, {orderingPizza.size}
+        </Text>
         <Text>{pizza.description}</Text>
-        <PizzaSizeControl
+        <SegmentedControl
           value={orderingPizza.size}
-          sizes={pizza.sizes.map((size) => size.type)}
           onChange={(size) => setOrderingPizza({ ...orderingPizza, size })}
+          data={pizza.sizes.map((size) => size.type)}
+          fullWidth
+          withItemsBorders={false}
+          radius="xl"
         />
         <SimpleGrid cols={3}>
-          {pizza.toppings.map((t) => (
+          {pizza.toppings.map((topping) => (
             <PizzaToppingCard
-              key={t.type}
-              topping={t}
-              isSelected={orderingPizza.toppings.includes(t.type)}
+              key={topping.type}
+              topping={topping}
+              isSelected={orderingPizza.toppings.includes(topping.type)}
               onClick={() =>
                 setOrderingPizza({
                   ...orderingPizza,
-                  toppings: toggleArrayItem(t.type, orderingPizza.toppings),
+                  toppings: toggleArrayItem(topping.type, orderingPizza.toppings),
                 })
               }
             />
