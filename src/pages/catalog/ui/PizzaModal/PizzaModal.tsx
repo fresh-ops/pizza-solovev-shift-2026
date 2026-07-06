@@ -1,18 +1,19 @@
 import { Modal, type ModalProps } from "@mantine/core";
 
-import type { Pizza } from "@/shared/api";
-
-import { ErrorMessage } from "@/shared/ui";
+import type { OrderedPizza, Pizza } from "@/shared/api";
 
 import { PizzaModalContent } from "./PizzaModalContent";
 
-export interface PizzaModalProps extends ModalProps {
+export interface PizzaModalProps extends Omit<ModalProps, "opened"> {
   pizza?: Pizza;
+  orderingPizza: OrderedPizza;
+  onPizzaChange: (pizza: OrderedPizza) => void;
 }
 
-export const PizzaModal = ({ pizza, ...props }: PizzaModalProps) => (
-  <Modal {...props}>
-    {!pizza && <ErrorMessage />}
-    {pizza && <PizzaModalContent pizza={pizza} />}
+export const PizzaModal = ({ pizza, orderingPizza, onPizzaChange, ...props }: PizzaModalProps) => (
+  <Modal {...props} opened={!!pizza}>
+    {pizza && (
+      <PizzaModalContent pizza={pizza} orderingPizza={orderingPizza} onChange={onPizzaChange} />
+    )}
   </Modal>
 );

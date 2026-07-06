@@ -4,3 +4,4 @@ export { ApiError } from "./apiError.ts";
 
 export * from "./__generated__/";
 export * from "./__generated__/@tanstack/react-query.gen.ts";
+export * from "./__generated__/zod.gen.ts";
