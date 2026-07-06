@@ -1,5 +1,5 @@
 import { Button, Group, Image, SegmentedControl, SimpleGrid, Stack, Text } from "@mantine/core";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import type { OrderedPizza, Pizza } from "@/shared/api";
 
@@ -10,15 +10,11 @@ import { PizzaToppingCard } from "./PizzaToppingCard";
 
 export interface PizzaModalContentProps {
   pizza: Pizza;
+  orderingPizza: OrderedPizza;
+  onChange: (pizza: OrderedPizza) => void;
 }
 
-export const PizzaModalContent = ({ pizza }: PizzaModalContentProps) => {
-  const [orderingPizza, setOrderingPizza] = useState<OrderedPizza>({
-    id: pizza.id,
-    toppings: [],
-    size: "small",
-    dough: "thin",
-  });
+export const PizzaModalContent = ({ pizza, orderingPizza, onChange }: PizzaModalContentProps) => {
   const price = useMemo(
     () => calculateOrderedPizzaPrice(orderingPizza, pizza),
     [orderingPizza, pizza],
@@ -37,7 +33,7 @@ export const PizzaModalContent = ({ pizza }: PizzaModalContentProps) => {
         <Text>{pizza.description}</Text>
         <SegmentedControl
           value={orderingPizza.size}
-          onChange={(size) => setOrderingPizza({ ...orderingPizza, size })}
+          onChange={(size) => onChange({ ...orderingPizza, size })}
           data={pizza.sizes.map((size) => size.type)}
           fullWidth
           withItemsBorders={false}
@@ -50,7 +46,7 @@ export const PizzaModalContent = ({ pizza }: PizzaModalContentProps) => {
               topping={topping}
               isSelected={orderingPizza.toppings.includes(topping.type)}
               onClick={() =>
-                setOrderingPizza({
+                onChange({
                   ...orderingPizza,
                   toppings: toggleArrayItem(topping.type, orderingPizza.toppings),
                 })

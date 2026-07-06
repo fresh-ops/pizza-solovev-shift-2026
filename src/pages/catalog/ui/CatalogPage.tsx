@@ -1,38 +1,48 @@
 import { Container, SimpleGrid } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { useMemo } from "react";
 
-import type { Pizza } from "@/shared/api";
+import { pizzaControllerGetPizzasCatalogOptions } from "@/shared/api";
 
-import { ErrorMessage } from "@/shared/ui";
-
-import { useGetPizzasCatalogQuery } from "../lib/useGetPizzasCatalogQuery";
 import { PizzaCard } from "./PizzaCard";
 import { PizzaModal } from "./PizzaModal";
 
 export const CatalogPage = () => {
-  const { data, error, isError } = useGetPizzasCatalogQuery();
-  const [selectedPizza, setSelectedPizza] = useState<Pizza>();
-  const [opened, { open, close }] = useDisclosure(false);
+  const navigate = useNavigate();
+
+  const searchParams = getRouteApi("/").useSearch();
+  const normalizedSearchParams = {
+    id: searchParams.id ?? "",
+    size: searchParams.size ?? "small",
+    dough: searchParams.dough ?? "thin",
+    toppings: searchParams.toppings ?? [],
+  };
+  const catalogQuery = useSuspenseQuery(pizzaControllerGetPizzasCatalogOptions({}));
+  const selectedPizza = useMemo(
+    () => catalogQuery.data.catalog.find(({ id }) => id === normalizedSearchParams.id),
+    [catalogQuery.data.catalog, normalizedSearchParams.id],
+  );
 
   return (
     <Container my="xl">
-      <PizzaModal pizza={selectedPizza} opened={opened} onClose={close} centered size="xl" />
-      {isError && <ErrorMessage fw={900} error={error} />}
-      {data && (
-        <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }} spacing="md">
-          {data.catalog.map((pizza) => (
-            <PizzaCard
-              key={pizza.id}
-              pizza={pizza}
-              onClick={() => {
-                setSelectedPizza(pizza);
-                open();
-              }}
-            />
-          ))}
-        </SimpleGrid>
-      )}
+      <PizzaModal
+        pizza={selectedPizza}
+        orderingPizza={normalizedSearchParams}
+        onPizzaChange={(newPizza) => navigate({ to: "/", search: newPizza })}
+        onClose={() => navigate({ to: "/" })}
+        centered
+        size="xl"
+      />
+      <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }} spacing="md">
+        {catalogQuery.data.catalog.map((pizza) => (
+          <PizzaCard
+            key={pizza.id}
+            pizza={pizza}
+            onClick={() => navigate({ to: "/", search: { id: pizza.id } })}
+          />
+        ))}
+      </SimpleGrid>
     </Container>
   );
 };
