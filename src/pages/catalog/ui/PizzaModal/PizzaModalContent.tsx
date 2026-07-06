@@ -1,5 +1,6 @@
 import { Button, Group, Image, SegmentedControl, SimpleGrid, Stack, Text } from "@mantine/core";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { OrderedPizza, Pizza } from "@/shared/api";
 
@@ -15,6 +16,7 @@ export interface PizzaModalContentProps {
 }
 
 export const PizzaModalContent = ({ pizza, orderingPizza, onChange }: PizzaModalContentProps) => {
+  const { t } = useTranslation();
   const price = useMemo(
     () => calculateOrderedPizzaPrice(orderingPizza, pizza),
     [orderingPizza, pizza],
@@ -28,13 +30,13 @@ export const PizzaModalContent = ({ pizza, orderingPizza, onChange }: PizzaModal
           {pizza.name}
         </Text>
         <Text>
-          {orderingPizza.dough}, {orderingPizza.size}
+          {t(`dough.${orderingPizza.dough}`)}, {t(`size.${orderingPizza.size}`)}
         </Text>
         <Text>{pizza.description}</Text>
         <SegmentedControl
           value={orderingPizza.size}
           onChange={(size) => onChange({ ...orderingPizza, size })}
-          data={pizza.sizes.map((size) => size.type)}
+          data={pizza.sizes.map(({ type }) => ({ label: t(`size.${type}`), value: type }))}
           fullWidth
           withItemsBorders={false}
           radius="xl"
