@@ -1,0 +1,31 @@
+{
+  "size": {
+    "small": "25 см",
+    "medium": "30 см",
+    "large": "35 см"
+  },
+  "ingredient": {
+    "pineapple": "Ананас",
+    "mozzarella": "Моцарелла",
+    "pepperoni": "Пепперони",
+    "green_pepper": "Зелёный перец",
+    "mushrooms": "Шампиньоны",
+    "basil": "Базилик",
+    "cheddar": "Чеддер",
+    "parmesan": "Пармезан",
+    "feta": "Фета",
+    "ham": "Ветчина",
+    "pickle": "Маринованный огурец",
+    "tomato": "Помидор",
+    "bacon": "Бекон",
+    "onion": "Лук",
+    "chile": "Перец чили",
+    "shrimp": "Креветки",
+    "chicken_fillet": "Куриное филе",
+    "meatballs": "Фрикадельки"
+  },
+  "dough": {
+    "thin": "Тонкое",
+    "thick": "Традиционное"
+  }
+}

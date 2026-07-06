@@ -4,6 +4,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider } from "@tanstack/react-router";
 
+import "@/shared/i18n";
 import { queryClient } from "@/shared/api";
 
 import { router } from "./router";
