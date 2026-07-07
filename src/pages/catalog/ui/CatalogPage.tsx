@@ -1,4 +1,4 @@
-import { Container, SimpleGrid } from "@mantine/core";
+import { SimpleGrid } from "@mantine/core";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
@@ -27,7 +27,7 @@ export const CatalogPage = () => {
   const { addItem } = useCart();
 
   return (
-    <Container my="xl">
+    <>
       <PizzaModal
         pizza={selectedPizza}
         orderingPizza={normalizedSearchParams}
@@ -46,6 +46,6 @@ export const CatalogPage = () => {
           />
         ))}
       </SimpleGrid>
-    </Container>
+    </>
   );
 };

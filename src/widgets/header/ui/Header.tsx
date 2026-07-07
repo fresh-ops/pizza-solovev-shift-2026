@@ -7,7 +7,7 @@ export const Header = () => {
   const favicon = useFavicon();
   const navigate = useNavigate();
   return (
-    <Paper radius="xl" shadow="md" style={{ position: "sticky", top: 0, zIndex: 100 }}>
+    <Paper radius="xl" shadow="md" style={{ position: "sticky", top: 4, zIndex: 100 }}>
       <Group px="md" py="sm" align="center" justify="space-between">
         <Group onClick={() => navigate({ to: "/" })} gap="0">
           <Image w="auto" h="1.5rem" src={favicon.href} style={{ verticalAlign: "baseline" }} />
