@@ -2,7 +2,10 @@ import { z } from "zod";
 
 import { zOrderedPizza } from "@/shared/api";
 
-export const zCartItem = zOrderedPizza.extend({});
+export const zCartItem = zOrderedPizza.extend({
+  cartId: z.string(),
+  count: z.number().int().positive(),
+});
 
 export type CartItem = z.infer<typeof zCartItem>;
 

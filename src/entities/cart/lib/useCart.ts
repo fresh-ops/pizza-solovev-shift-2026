@@ -1,13 +1,18 @@
-import { type Cart, type CartItem } from "../model/Cart";
+import type { OrderedPizza } from "@/shared/api";
+
+import { type Cart } from "../model/Cart";
 import { cartStore } from "./cartStore";
 
-const addItem = (item: CartItem) =>
-  cartStore.set((state) => ({ ...state, items: [...state.items, item] }));
+const addItem = (item: OrderedPizza) =>
+  cartStore.set((state) => ({
+    ...state,
+    items: [...state.items, { ...item, cartId: crypto.randomUUID(), count: 1 }],
+  }));
 
 const clear = () => cartStore.set((state) => ({ ...state, items: [] }));
 
 export interface UseCartReturn extends Cart {
-  addItem: (item: CartItem) => void;
+  addItem: (item: OrderedPizza) => void;
   clear: () => void;
 }
 
