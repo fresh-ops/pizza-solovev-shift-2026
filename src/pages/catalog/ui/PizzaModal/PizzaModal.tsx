@@ -8,12 +8,19 @@ export interface PizzaModalProps extends Omit<ModalProps, "opened"> {
   pizza?: Pizza;
   orderingPizza: OrderedPizza;
   onPizzaChange: (pizza: OrderedPizza) => void;
+  onOrderSubmit: (pizza: OrderedPizza) => void;
 }
 
-export const PizzaModal = ({ pizza, orderingPizza, onPizzaChange, ...props }: PizzaModalProps) => (
+export const PizzaModal = ({
+  pizza,
+  orderingPizza,
+  onPizzaChange,
+  onOrderSubmit,
+  ...props
+}: PizzaModalProps) => (
   <Modal {...props} opened={!!pizza}>
     {pizza && (
-      <PizzaModalContent pizza={pizza} orderingPizza={orderingPizza} onChange={onPizzaChange} />
+      <PizzaModalContent {...{ pizza, orderingPizza, onChange: onPizzaChange, onOrderSubmit }} />
     )}
   </Modal>
 );

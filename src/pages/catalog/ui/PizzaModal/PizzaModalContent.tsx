@@ -13,9 +13,15 @@ export interface PizzaModalContentProps {
   pizza: Pizza;
   orderingPizza: OrderedPizza;
   onChange: (pizza: OrderedPizza) => void;
+  onOrderSubmit: (pizza: OrderedPizza) => void;
 }
 
-export const PizzaModalContent = ({ pizza, orderingPizza, onChange }: PizzaModalContentProps) => {
+export const PizzaModalContent = ({
+  pizza,
+  orderingPizza,
+  onChange,
+  onOrderSubmit,
+}: PizzaModalContentProps) => {
   const { t } = useTranslation();
   const price = useMemo(
     () => calculateOrderedPizzaPrice(orderingPizza, pizza),
@@ -56,7 +62,9 @@ export const PizzaModalContent = ({ pizza, orderingPizza, onChange }: PizzaModal
             />
           ))}
         </SimpleGrid>
-        <Button radius="xl">Добавить за {price} ₽</Button>
+        <Button radius="xl" onClick={() => onOrderSubmit(orderingPizza)}>
+          Добавить за {price} ₽
+        </Button>
       </Stack>
     </Group>
   );
