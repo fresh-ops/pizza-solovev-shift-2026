@@ -2,10 +2,10 @@ import { Title } from "@mantine/core";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-import { useCart } from "@/entities/cart";
-import { pizzaControllerGetPizzasCatalogOptions } from "@/shared/api";
+import { useCart, type CartItem } from "@/entities/cart";
+import { pizzaControllerGetPizzasCatalogOptions, type Pizza } from "@/shared/api";
 
-import { CartItemCard, type CartItemCardProps } from "./CartItemCard";
+import { CartItemCard } from "./CartItemCard";
 
 export interface CartPageProps {}
 
@@ -15,13 +15,10 @@ export const CartPage = () => {
   const items = useMemo(() => {
     const catalogMap = new Map(catalogQuery.data.catalog.map((item) => [item.id, item]));
 
-    return cart.items.reduce<Pick<CartItemCardProps, "cartItem" | "pizza">[]>((acc, cartItem) => {
+    return cart.items.flatMap<{ cartItem: CartItem; pizza: Pizza }>((cartItem) => {
       const pizza = catalogMap.get(cartItem.id);
-      if (pizza) {
-        acc.push({ cartItem, pizza });
-      }
-      return acc;
-    }, []);
+      return pizza ? [{ cartItem, pizza }] : [];
+    });
   }, [catalogQuery.data.catalog, cart.items]);
 
   return (
