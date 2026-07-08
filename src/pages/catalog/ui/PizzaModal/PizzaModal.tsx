@@ -7,20 +7,26 @@ import { PizzaModalContent } from "./PizzaModalContent";
 export interface PizzaModalProps extends Omit<ModalProps, "opened"> {
   pizza?: Pizza;
   orderingPizza: OrderedPizza;
+  count: number;
   onPizzaChange: (pizza: OrderedPizza) => void;
-  onOrderSubmit: (pizza: OrderedPizza) => void;
+  onAddItem: (pizza: OrderedPizza) => void;
+  onRemoveItem: (pizza: OrderedPizza) => void;
 }
 
 export const PizzaModal = ({
   pizza,
   orderingPizza,
+  count,
   onPizzaChange,
-  onOrderSubmit,
+  onAddItem,
+  onRemoveItem,
   ...props
 }: PizzaModalProps) => (
   <Modal {...props} opened={!!pizza}>
     {pizza && (
-      <PizzaModalContent {...{ pizza, orderingPizza, onChange: onPizzaChange, onOrderSubmit }} />
+      <PizzaModalContent
+        {...{ pizza, orderingPizza, count, onChange: onPizzaChange, onAddItem, onRemoveItem }}
+      />
     )}
   </Modal>
 );

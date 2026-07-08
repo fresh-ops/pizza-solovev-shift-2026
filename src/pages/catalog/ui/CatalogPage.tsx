@@ -1,10 +1,10 @@
 import { SimpleGrid } from "@mantine/core";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { useCart } from "@/entities/cart";
-import { pizzaControllerGetPizzasCatalogOptions } from "@/shared/api";
+import { pizzaControllerGetPizzasCatalogOptions, type OrderedPizza } from "@/shared/api";
 
 import { PizzaCard } from "./PizzaCard";
 import { PizzaModal } from "./PizzaModal";
@@ -24,15 +24,26 @@ export const CatalogPage = () => {
     () => catalogQuery.data.catalog.find(({ id }) => id === normalizedSearchParams.id),
     [catalogQuery.data.catalog, normalizedSearchParams.id],
   );
-  const { addItem } = useCart();
+  const { addItem, decreaseCount, getCorresponding } = useCart();
+  const onRemoveItem = useCallback(
+    (pizza: OrderedPizza) => {
+      const cartItem = getCorresponding(pizza);
+      if (cartItem) {
+        decreaseCount(cartItem);
+      }
+    },
+    [getCorresponding, decreaseCount],
+  );
 
   return (
     <>
       <PizzaModal
         pizza={selectedPizza}
         orderingPizza={normalizedSearchParams}
+        count={getCorresponding(normalizedSearchParams)?.count ?? 0}
         onPizzaChange={(pizza) => navigate({ to: "/", search: pizza })}
-        onOrderSubmit={addItem}
+        onAddItem={addItem}
+        onRemoveItem={onRemoveItem}
         onClose={() => navigate({ to: "/" })}
         centered
         size="xl"

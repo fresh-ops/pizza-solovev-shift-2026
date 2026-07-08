@@ -53,6 +53,13 @@ const decreaseCount = (item: CartItem) =>
       }))
     : removeItem(item);
 
+const getCorresponding = (pizza: OrderedPizza) => {
+  const keys = Object.keys(pizza) as Array<keyof OrderedPizza>;
+  return cartStore
+    .get()
+    .items.find((item) => keys.every((key) => _.isEqual(item[key], pizza[key])));
+};
+
 const clear = () => cartStore.set((state) => ({ ...state, items: [] }));
 
 export interface UseCartReturn extends Cart {
@@ -60,6 +67,7 @@ export interface UseCartReturn extends Cart {
   removeItem: (item: CartItem) => void;
   increaseCount: (item: CartItem) => void;
   decreaseCount: (item: CartItem) => void;
+  getCorresponding: (pizza: OrderedPizza) => CartItem | undefined;
   clear: () => void;
 }
 
@@ -72,6 +80,7 @@ export const useCart = (): UseCartReturn => {
     removeItem,
     increaseCount,
     decreaseCount,
+    getCorresponding,
     clear,
   };
 };

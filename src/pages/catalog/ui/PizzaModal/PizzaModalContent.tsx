@@ -1,4 +1,14 @@
-import { Button, Group, Image, SegmentedControl, SimpleGrid, Stack, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Group,
+  Image,
+  SegmentedControl,
+  SimpleGrid,
+  Stack,
+  Text,
+} from "@mantine/core";
+import { MinusIcon, PlusIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -12,15 +22,19 @@ import { PizzaToppingCard } from "./PizzaToppingCard";
 export interface PizzaModalContentProps {
   pizza: Pizza;
   orderingPizza: OrderedPizza;
+  count: number;
   onChange: (pizza: OrderedPizza) => void;
-  onOrderSubmit: (pizza: OrderedPizza) => void;
+  onAddItem: (pizza: OrderedPizza) => void;
+  onRemoveItem: (pizza: OrderedPizza) => void;
 }
 
 export const PizzaModalContent = ({
   pizza,
   orderingPizza,
+  count,
   onChange,
-  onOrderSubmit,
+  onAddItem,
+  onRemoveItem,
 }: PizzaModalContentProps) => {
   const { t } = useTranslation();
   const price = useMemo(
@@ -62,9 +76,24 @@ export const PizzaModalContent = ({
             />
           ))}
         </SimpleGrid>
-        <Button radius="xl" onClick={() => onOrderSubmit(orderingPizza)}>
-          Добавить за {price} ₽
-        </Button>
+        {count <= 0 && (
+          <Button radius="xl" onClick={() => onAddItem(orderingPizza)}>
+            Добавить за {price} ₽
+          </Button>
+        )}
+        {count > 0 && (
+          <ActionIcon.Group w="100%">
+            <ActionIcon size="md" flex={1} onClick={() => onRemoveItem(orderingPizza)}>
+              <MinusIcon />
+            </ActionIcon>
+            <ActionIcon.GroupSection size="md" flex={2}>
+              {count}
+            </ActionIcon.GroupSection>
+            <ActionIcon size="md" flex={1} onClick={() => onAddItem(orderingPizza)}>
+              <PlusIcon />
+            </ActionIcon>
+          </ActionIcon.Group>
+        )}
       </Stack>
     </Group>
   );
