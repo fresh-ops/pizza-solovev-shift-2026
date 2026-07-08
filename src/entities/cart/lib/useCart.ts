@@ -1,6 +1,6 @@
 import type { OrderedPizza } from "@/shared/api";
 
-import { type Cart } from "../model/Cart";
+import { type Cart, type CartItem } from "../model/Cart";
 import { cartStore } from "./cartStore";
 
 const addItem = (item: OrderedPizza) =>
@@ -9,10 +9,17 @@ const addItem = (item: OrderedPizza) =>
     items: [...state.items, { ...item, cartId: crypto.randomUUID(), count: 1 }],
   }));
 
+const removeItem = (item: CartItem) =>
+  cartStore.set((state) => ({
+    ...state,
+    items: state.items.filter(({ cartId }) => cartId !== item.cartId),
+  }));
+
 const clear = () => cartStore.set((state) => ({ ...state, items: [] }));
 
 export interface UseCartReturn extends Cart {
   addItem: (item: OrderedPizza) => void;
+  removeItem: (item: CartItem) => void;
   clear: () => void;
 }
 
@@ -22,6 +29,7 @@ export const useCart = (): UseCartReturn => {
   return {
     items,
     addItem,
+    removeItem,
     clear,
   };
 };
