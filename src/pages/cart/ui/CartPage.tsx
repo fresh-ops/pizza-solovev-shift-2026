@@ -13,18 +13,15 @@ export const CartPage = () => {
   const catalogQuery = useSuspenseQuery(pizzaControllerGetPizzasCatalogOptions({}));
   const cart = useCart();
   const items = useMemo(() => {
-    const cartItemMap = new Map(cart.items.map((item) => [item.id, item]));
+    const catalogMap = new Map(catalogQuery.data.catalog.map((item) => [item.id, item]));
 
-    return catalogQuery.data.catalog.reduce<Pick<CartItemCardProps, "cartItem" | "pizza">[]>(
-      (acc, pizza) => {
-        const cartItem = cartItemMap.get(pizza.id);
-        if (cartItem) {
-          acc.push({ cartItem, pizza });
-        }
-        return acc;
-      },
-      [],
-    );
+    return cart.items.reduce<Pick<CartItemCardProps, "cartItem" | "pizza">[]>((acc, cartItem) => {
+      const pizza = catalogMap.get(cartItem.id);
+      if (pizza) {
+        acc.push({ cartItem, pizza });
+      }
+      return acc;
+    }, []);
   }, [catalogQuery.data.catalog, cart.items]);
 
   return (
