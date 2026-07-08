@@ -1,13 +1,31 @@
+import _ from "lodash";
+
 import type { OrderedPizza } from "@/shared/api";
 
 import { type Cart, type CartItem } from "../model/Cart";
 import { cartStore } from "./cartStore";
 
-const addItem = (item: OrderedPizza) =>
-  cartStore.set((state) => ({
-    ...state,
-    items: [...state.items, { ...item, cartId: crypto.randomUUID(), count: 1 }],
-  }));
+const addItem = (newItem: OrderedPizza) =>
+  cartStore.set((state) => {
+    const keys = Object.keys(newItem) as Array<keyof OrderedPizza>;
+    const matchingIndex = state.items.findIndex((item) =>
+      keys.every((key) => _.isEqual(item[key], newItem[key])),
+    );
+
+    if (matchingIndex !== -1) {
+      return {
+        ...state,
+        items: state.items.map((item, index) =>
+          index === matchingIndex ? { ...item, count: item.count + 1 } : item,
+        ),
+      };
+    }
+
+    return {
+      ...state,
+      items: [...state.items, { ...newItem, cartId: crypto.randomUUID(), count: 1 }],
+    };
+  });
 
 const removeItem = (item: CartItem) =>
   cartStore.set((state) => ({

@@ -26,6 +26,7 @@ export const CartItemCard = ({ pizza, cartItem, onRemove }: CartItemCardProps) =
           {cartItem.toppings.length > 0 &&
             " + " + cartItem.toppings.map((topping) => t(`ingredient.${topping}`)).join(", ")}
         </Text>
+        <Text>x{cartItem.count}</Text>
         <ActionIcon onClick={() => onRemove(cartItem)} variant="transparent">
           <XIcon />
         </ActionIcon>
