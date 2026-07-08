@@ -3,7 +3,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
 
-import type { OrderedPizza } from "@/shared/api";
+import type { OrderedPizza } from "@/entities/pizza";
 
 import { useCart } from "@/entities/cart";
 import { pizzaControllerGetPizzasCatalogOptions } from "@/shared/api";

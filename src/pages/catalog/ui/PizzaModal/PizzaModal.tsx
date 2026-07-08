@@ -1,11 +1,11 @@
 import { Group, Image, Stack, Text, Modal, type ModalProps } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 
-import type { OrderedPizza, Pizza } from "@/shared/api";
+import type { OrderedPizza, Pizza } from "@/entities/pizza";
 
+import { calculatePizzaPrice } from "@/entities/pizza";
 import { getAssetUrl } from "@/shared/lib";
 
-import { calculateOrderedPizzaPrice } from "../../lib/calculateOrderedPizzaPrice";
 import { PizzaConfigurator } from "./PizzaConfigurator";
 import { PizzaCountControls } from "./PizzaCountControls";
 
@@ -28,7 +28,7 @@ export const PizzaModal = ({
   ...props
 }: PizzaModalProps) => {
   const { t } = useTranslation();
-  const price = pizza ? calculateOrderedPizzaPrice(orderingPizza, pizza) : 0;
+  const price = pizza ? calculatePizzaPrice(orderingPizza, pizza) : 0;
   const updatePizza = (changes: Partial<OrderedPizza>) =>
     onPizzaChange({ ...orderingPizza, ...changes });
 

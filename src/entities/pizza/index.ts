@@ -1,2 +1,2 @@
-export type { Pizza } from "./model/Pizza";
-export { calculatePizzaStartingPrice } from "./lib/calculatePizzaStartingPrice";
+export type { Pizza, OrderedPizza } from "./model/Pizza";
+export { calculatePizzaPrice, calculateBasePizzaPrice } from "./lib/calculatePizzaPrice";

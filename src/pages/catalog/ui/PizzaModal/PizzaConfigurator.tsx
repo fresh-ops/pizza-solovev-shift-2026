@@ -2,7 +2,8 @@ import { SegmentedControl, SimpleGrid } from "@mantine/core";
 import { xor } from "es-toolkit";
 import { useTranslation } from "react-i18next";
 
-import type { OrderedPizza, PizzaIngredient, PizzaSize } from "@/shared/api";
+import type { OrderedPizza } from "@/entities/pizza";
+import type { PizzaIngredient, PizzaSize } from "@/shared/api";
 
 import { PizzaToppingCard } from "./PizzaToppingCard";
 

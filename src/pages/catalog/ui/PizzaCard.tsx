@@ -3,7 +3,7 @@ import { useMemo } from "react";
 
 import type { Pizza } from "@/entities/pizza";
 
-import { calculatePizzaStartingPrice } from "@/entities/pizza";
+import { calculateBasePizzaPrice } from "@/entities/pizza";
 import { getAssetUrl } from "@/shared/lib";
 
 export interface PizzaCardProps {
@@ -12,7 +12,7 @@ export interface PizzaCardProps {
 }
 
 export const PizzaCard = ({ pizza, onClick }: PizzaCardProps) => {
-  const price = useMemo(() => calculatePizzaStartingPrice(pizza), [pizza]);
+  const price = useMemo(() => calculateBasePizzaPrice(pizza), [pizza]);
 
   return (
     <Stack onClick={onClick}>
