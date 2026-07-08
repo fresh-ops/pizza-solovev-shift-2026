@@ -25,7 +25,13 @@ export const CartPage = () => {
     <>
       <Title>Корзина</Title>
       {items.map((item) => (
-        <CartItemCard key={item.cartItem.cartId} {...item} onRemove={cart.removeItem} />
+        <CartItemCard
+          key={item.cartItem.cartId}
+          {...item}
+          onIncreaseCount={cart.increaseCount}
+          onDecreaseCount={cart.decreaseCount}
+          onRemove={cart.removeItem}
+        />
       ))}
     </>
   );

@@ -33,11 +33,33 @@ const removeItem = (item: CartItem) =>
     items: state.items.filter(({ cartId }) => cartId !== item.cartId),
   }));
 
+const increaseCount = (item: CartItem) =>
+  cartStore.set((state) => ({
+    ...state,
+    items: state.items.map((it) => ({
+      ...it,
+      count: it.cartId === item.cartId ? it.count + 1 : it.count,
+    })),
+  }));
+
+const decreaseCount = (item: CartItem) =>
+  item.count > 1
+    ? cartStore.set((state) => ({
+        ...state,
+        items: state.items.map((it) => ({
+          ...it,
+          count: it.cartId === item.cartId ? it.count - 1 : it.count,
+        })),
+      }))
+    : removeItem(item);
+
 const clear = () => cartStore.set((state) => ({ ...state, items: [] }));
 
 export interface UseCartReturn extends Cart {
   addItem: (item: OrderedPizza) => void;
   removeItem: (item: CartItem) => void;
+  increaseCount: (item: CartItem) => void;
+  decreaseCount: (item: CartItem) => void;
   clear: () => void;
 }
 
@@ -48,6 +70,8 @@ export const useCart = (): UseCartReturn => {
     items,
     addItem,
     removeItem,
+    increaseCount,
+    decreaseCount,
     clear,
   };
 };

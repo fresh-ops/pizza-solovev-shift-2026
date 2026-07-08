@@ -1,5 +1,5 @@
 import { ActionIcon, Group, Image, Paper, Text } from "@mantine/core";
-import { XIcon } from "@phosphor-icons/react";
+import { MinusIcon, PlusIcon, XIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
 import type { CartItem } from "@/entities/cart";
@@ -10,10 +10,18 @@ import { getAssetUrl } from "@/shared/lib";
 export interface CartItemCardProps {
   pizza: Pizza;
   cartItem: CartItem;
+  onIncreaseCount: (item: CartItem) => void;
+  onDecreaseCount: (item: CartItem) => void;
   onRemove: (item: CartItem) => void;
 }
 
-export const CartItemCard = ({ pizza, cartItem, onRemove }: CartItemCardProps) => {
+export const CartItemCard = ({
+  pizza,
+  cartItem,
+  onIncreaseCount,
+  onDecreaseCount,
+  onRemove,
+}: CartItemCardProps) => {
   const { t } = useTranslation();
 
   return (
@@ -26,7 +34,15 @@ export const CartItemCard = ({ pizza, cartItem, onRemove }: CartItemCardProps) =
           {cartItem.toppings.length > 0 &&
             " + " + cartItem.toppings.map((topping) => t(`ingredient.${topping}`)).join(", ")}
         </Text>
-        <Text>x{cartItem.count}</Text>
+        <ActionIcon.Group>
+          <ActionIcon size="md" onClick={() => onDecreaseCount(cartItem)}>
+            <MinusIcon />
+          </ActionIcon>
+          <ActionIcon.GroupSection size="md">{cartItem.count}</ActionIcon.GroupSection>
+          <ActionIcon size="md" onClick={() => onIncreaseCount(cartItem)}>
+            <PlusIcon />
+          </ActionIcon>
+        </ActionIcon.Group>
         <ActionIcon onClick={() => onRemove(cartItem)} variant="transparent">
           <XIcon />
         </ActionIcon>
