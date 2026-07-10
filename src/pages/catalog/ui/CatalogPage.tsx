@@ -3,6 +3,8 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
 
+import type { OrderedPizza } from "@/shared/api";
+
 import { useCart } from "@/entities/cart";
 import { pizzaControllerGetPizzasCatalogOptions } from "@/shared/api";
 
@@ -24,15 +26,23 @@ export const CatalogPage = () => {
     () => catalogQuery.data.catalog.find(({ id }) => id === normalizedSearchParams.id),
     [catalogQuery.data.catalog, normalizedSearchParams.id],
   );
-  const { addItem } = useCart();
+  const cart = useCart();
+  const removeItem = (pizza: OrderedPizza) => {
+    const cartItem = cart.getCorresponding(pizza);
+    if (cartItem) {
+      cart.decreaseCount(cartItem);
+    }
+  };
 
   return (
     <>
       <PizzaModal
         pizza={selectedPizza}
         orderingPizza={normalizedSearchParams}
+        count={cart.getCorresponding(normalizedSearchParams)?.count ?? 0}
         onPizzaChange={(pizza) => navigate({ to: "/", search: pizza })}
-        onOrderSubmit={addItem}
+        onAddItem={cart.addItem}
+        onRemoveItem={removeItem}
         onClose={() => navigate({ to: "/" })}
         centered
         size="xl"

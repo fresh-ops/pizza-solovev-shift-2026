@@ -1,1 +1,2 @@
-export { PizzaModal, type PizzaModalProps } from "./PizzaModal";
+export type { PizzaModalProps } from "./PizzaModal";
+export { PizzaModal } from "./PizzaModal";

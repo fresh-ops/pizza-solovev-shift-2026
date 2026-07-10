@@ -1,6 +1,8 @@
 import { z } from "zod";
 
-import { DEFAULT_CART, zCart, type Cart } from "../model/Cart";
+import type { Cart } from "../model/Cart";
+
+import { DEFAULT_CART, zCart } from "../model/Cart";
 
 const CART_KEY = "cart";
 
