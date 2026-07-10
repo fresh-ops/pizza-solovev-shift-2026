@@ -26,11 +26,11 @@ export const CatalogPage = () => {
     () => catalogQuery.data.catalog.find(({ id }) => id === normalizedSearchParams.id),
     [catalogQuery.data.catalog, normalizedSearchParams.id],
   );
-  const { addItem, decreaseCount, getCorresponding } = useCart();
-  const onRemoveItem = (pizza: OrderedPizza) => {
-    const cartItem = getCorresponding(pizza);
+  const cart = useCart();
+  const removeItem = (pizza: OrderedPizza) => {
+    const cartItem = cart.getCorresponding(pizza);
     if (cartItem) {
-      decreaseCount(cartItem);
+      cart.decreaseCount(cartItem);
     }
   };
 
@@ -39,10 +39,10 @@ export const CatalogPage = () => {
       <PizzaModal
         pizza={selectedPizza}
         orderingPizza={normalizedSearchParams}
-        count={getCorresponding(normalizedSearchParams)?.count ?? 0}
+        count={cart.getCorresponding(normalizedSearchParams)?.count ?? 0}
         onPizzaChange={(pizza) => navigate({ to: "/", search: pizza })}
-        onAddItem={addItem}
-        onRemoveItem={onRemoveItem}
+        onAddItem={cart.addItem}
+        onRemoveItem={removeItem}
         onClose={() => navigate({ to: "/" })}
         centered
         size="xl"
