@@ -8,6 +8,7 @@ import { getAssetUrl } from "@/shared/lib";
 
 export interface CartItemCardProps {
   cartItem: CartItem;
+  price: number;
   onIncreaseCount: (item: CartItem) => void;
   onDecreaseCount: (item: CartItem) => void;
   onRemove: (item: CartItem) => void;
@@ -15,6 +16,7 @@ export interface CartItemCardProps {
 
 export const CartItemCard = ({
   cartItem,
+  price,
   onIncreaseCount,
   onDecreaseCount,
   onRemove,
@@ -40,6 +42,9 @@ export const CartItemCard = ({
             <PlusIcon />
           </ActionIcon>
         </ActionIcon.Group>
+        <Text flex={1} ta="center">
+          {price} ₽
+        </Text>
         <ActionIcon onClick={() => onRemove(cartItem)} variant="transparent">
           <XIcon />
         </ActionIcon>
