@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root"
+import { Route as OrderRouteImport } from "./routes/order"
 import { Route as CartRouteImport } from "./routes/cart"
 import { Route as IndexRouteImport } from "./routes/index"
 
+const OrderRoute = OrderRouteImport.update({
+  id: "/order",
+  path: "/order",
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CartRoute = CartRouteImport.update({
   id: "/cart",
   path: "/cart",
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute
   "/cart": typeof CartRoute
+  "/order": typeof OrderRoute
 }
 export interface FileRoutesByTo {
   "/": typeof IndexRoute
   "/cart": typeof CartRoute
+  "/order": typeof OrderRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/": typeof IndexRoute
   "/cart": typeof CartRoute
+  "/order": typeof OrderRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: "/" | "/cart"
+  fullPaths: "/" | "/cart" | "/order"
   fileRoutesByTo: FileRoutesByTo
-  to: "/" | "/cart"
-  id: "__root__" | "/" | "/cart"
+  to: "/" | "/cart" | "/order"
+  id: "__root__" | "/" | "/cart" | "/order"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CartRoute: typeof CartRoute
+  OrderRoute: typeof OrderRoute
 }
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/order": {
+      id: "/order"
+      path: "/order"
+      fullPath: "/order"
+      preLoaderRoute: typeof OrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/cart": {
       id: "/cart"
       path: "/cart"
@@ -71,6 +88,7 @@ declare module "@tanstack/react-router" {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CartRoute: CartRoute,
+  OrderRoute: OrderRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
