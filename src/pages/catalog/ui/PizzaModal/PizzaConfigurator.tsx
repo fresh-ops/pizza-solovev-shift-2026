@@ -1,5 +1,5 @@
 import { SegmentedControl, SimpleGrid } from "@mantine/core";
-import _ from "lodash";
+import { xor } from "es-toolkit";
 import { useTranslation } from "react-i18next";
 
 import type { OrderedPizza, PizzaIngredient, PizzaSize } from "@/shared/api";
@@ -34,7 +34,7 @@ export const PizzaConfigurator = ({ value, onChange, sizes, toppings }: PizzaCon
             isSelected={value.toppings.includes(topping.type)}
             onClick={() =>
               onChange({
-                toppings: _.xor([topping.type], value.toppings),
+                toppings: xor([topping.type], value.toppings),
               })
             }
           />

@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { isEqual } from "es-toolkit";
 
 import type { OrderedPizza, Pizza } from "@/shared/api";
 
@@ -10,7 +10,7 @@ const addItem = (pizza: Pizza, order: OrderedPizza) =>
   cartStore.set((state) => {
     const keys = Object.keys(order) as Array<keyof OrderedPizza>;
     const matchingIndex = state.items.findIndex((item) =>
-      keys.every((key) => _.isEqual(item.order[key], order[key])),
+      keys.every((key) => isEqual(item.order[key], order[key])),
     );
 
     if (matchingIndex !== -1) {
@@ -58,7 +58,7 @@ const getCorresponding = (order: OrderedPizza) => {
   const keys = Object.keys(order) as Array<keyof OrderedPizza>;
   return cartStore
     .get()
-    .items.find((item) => keys.every((key) => _.isEqual(item.order[key], order[key])));
+    .items.find((item) => keys.every((key) => isEqual(item.order[key], order[key])));
 };
 
 const clear = () => cartStore.set((state) => ({ ...state, items: [] }));
