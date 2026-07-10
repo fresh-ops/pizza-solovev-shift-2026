@@ -2,7 +2,9 @@ import { Title } from "@mantine/core";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
-import { useCart, type CartItem } from "@/entities/cart";
+import type { CartItem } from "@/entities/cart";
+
+import { useCart } from "@/entities/cart";
 import { pizzaControllerGetPizzasCatalogOptions, type Pizza } from "@/shared/api";
 
 import { CartItemCard } from "./CartItemCard";

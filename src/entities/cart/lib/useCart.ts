@@ -2,7 +2,8 @@ import _ from "lodash";
 
 import type { OrderedPizza } from "@/shared/api";
 
-import { type Cart, type CartItem } from "../model/Cart";
+import type { Cart, CartItem } from "../model/Cart";
+
 import { cartStore } from "./cartStore";
 
 const addItem = (newItem: OrderedPizza) =>

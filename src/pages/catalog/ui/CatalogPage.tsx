@@ -3,8 +3,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useCallback, useMemo } from "react";
 
+import type { OrderedPizza } from "@/shared/api";
+
 import { useCart } from "@/entities/cart";
-import { pizzaControllerGetPizzasCatalogOptions, type OrderedPizza } from "@/shared/api";
+import { pizzaControllerGetPizzasCatalogOptions } from "@/shared/api";
 
 import { PizzaCard } from "./PizzaCard";
 import { PizzaModal } from "./PizzaModal";

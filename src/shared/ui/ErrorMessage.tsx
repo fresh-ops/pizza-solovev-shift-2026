@@ -1,4 +1,6 @@
-import { Text, type TextProps } from "@mantine/core";
+import type { TextProps } from "@mantine/core";
+
+import { Text } from "@mantine/core";
 
 import { ApiError } from "../api";
 
