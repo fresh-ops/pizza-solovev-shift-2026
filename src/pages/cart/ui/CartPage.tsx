@@ -14,7 +14,7 @@ export const CartPage = () => {
   const prices = cart.items.map(
     ({ order, pizza, count }) => count * calculatePizzaPrice(order, pizza),
   );
-  const totalPrice = prices.reduce((acc, price) => acc + price);
+  const totalPrice = prices.reduce((acc, price) => acc + price, 0);
 
   return (
     <>
