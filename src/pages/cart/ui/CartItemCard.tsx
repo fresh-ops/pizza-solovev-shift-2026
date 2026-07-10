@@ -3,12 +3,10 @@ import { MinusIcon, PlusIcon, XIcon } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
 import type { CartItem } from "@/entities/cart";
-import type { Pizza } from "@/shared/api";
 
 import { getAssetUrl } from "@/shared/lib";
 
 export interface CartItemCardProps {
-  pizza: Pizza;
   cartItem: CartItem;
   onIncreaseCount: (item: CartItem) => void;
   onDecreaseCount: (item: CartItem) => void;
@@ -16,7 +14,6 @@ export interface CartItemCardProps {
 }
 
 export const CartItemCard = ({
-  pizza,
   cartItem,
   onIncreaseCount,
   onDecreaseCount,
@@ -27,12 +24,12 @@ export const CartItemCard = ({
   return (
     <Paper radius="lg" shadow="sm">
       <Group p="sm">
-        <Image maw={100} h="auto" src={getAssetUrl(pizza.img)} />
-        <Text flex={1}>{pizza.name}</Text>
+        <Image maw={100} h="auto" src={getAssetUrl(cartItem.pizza.img)} />
+        <Text flex={1}>{cartItem.pizza.name}</Text>
         <Text flex={1} c="dimmed">
-          {t(`dough.${cartItem.dough}`)}, {t(`size.${cartItem.size}`)}
-          {cartItem.toppings.length > 0 &&
-            " + " + cartItem.toppings.map((topping) => t(`ingredient.${topping}`)).join(", ")}
+          {t(`dough.${cartItem.order.dough}`)}, {t(`size.${cartItem.order.size}`)}
+          {cartItem.order.toppings.length > 0 &&
+            " + " + cartItem.order.toppings.map((topping) => t(`ingredient.${topping}`)).join(", ")}
         </Text>
         <ActionIcon.Group>
           <ActionIcon size="md" onClick={() => onDecreaseCount(cartItem)}>

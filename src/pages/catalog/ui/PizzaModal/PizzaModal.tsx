@@ -14,7 +14,7 @@ export interface PizzaModalProps extends Omit<ModalProps, "opened"> {
   orderingPizza: OrderedPizza;
   count: number;
   onPizzaChange: (pizza: OrderedPizza) => void;
-  onAddItem: (pizza: OrderedPizza) => void;
+  onAddItem: (pizza: Pizza, order: OrderedPizza) => void;
   onRemoveItem: (pizza: OrderedPizza) => void;
 }
 
@@ -54,7 +54,7 @@ export const PizzaModal = ({
             <PizzaCountControls
               count={count}
               price={price}
-              onIncrease={() => onAddItem(orderingPizza)}
+              onIncrease={() => onAddItem(pizza, orderingPizza)}
               onDecrease={() => onRemoveItem(orderingPizza)}
             />
           </Stack>

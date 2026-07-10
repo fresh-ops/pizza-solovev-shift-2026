@@ -1,16 +1,16 @@
 import _ from "lodash";
 
-import type { OrderedPizza } from "@/shared/api";
+import type { OrderedPizza, Pizza } from "@/shared/api";
 
 import type { Cart, CartItem } from "../model/Cart";
 
 import { cartStore } from "./cartStore";
 
-const addItem = (newItem: OrderedPizza) =>
+const addItem = (pizza: Pizza, order: OrderedPizza) =>
   cartStore.set((state) => {
-    const keys = Object.keys(newItem) as Array<keyof OrderedPizza>;
+    const keys = Object.keys(order) as Array<keyof OrderedPizza>;
     const matchingIndex = state.items.findIndex((item) =>
-      keys.every((key) => _.isEqual(item[key], newItem[key])),
+      keys.every((key) => _.isEqual(item.order[key], order[key])),
     );
 
     if (matchingIndex !== -1) {
@@ -24,7 +24,7 @@ const addItem = (newItem: OrderedPizza) =>
 
     return {
       ...state,
-      items: [...state.items, { ...newItem, cartId: crypto.randomUUID(), count: 1 }],
+      items: [...state.items, { pizza, order, cartId: crypto.randomUUID(), count: 1 }],
     };
   });
 
@@ -54,17 +54,17 @@ const decreaseCount = (item: CartItem) =>
       }))
     : removeItem(item);
 
-const getCorresponding = (pizza: OrderedPizza) => {
-  const keys = Object.keys(pizza) as Array<keyof OrderedPizza>;
+const getCorresponding = (order: OrderedPizza) => {
+  const keys = Object.keys(order) as Array<keyof OrderedPizza>;
   return cartStore
     .get()
-    .items.find((item) => keys.every((key) => _.isEqual(item[key], pizza[key])));
+    .items.find((item) => keys.every((key) => _.isEqual(item.order[key], order[key])));
 };
 
 const clear = () => cartStore.set((state) => ({ ...state, items: [] }));
 
 export interface UseCartReturn extends Cart {
-  addItem: (item: OrderedPizza) => void;
+  addItem: (pizza: Pizza, order: OrderedPizza) => void;
   removeItem: (item: CartItem) => void;
   increaseCount: (item: CartItem) => void;
   decreaseCount: (item: CartItem) => void;
