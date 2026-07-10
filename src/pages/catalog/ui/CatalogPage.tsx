@@ -1,7 +1,7 @@
 import { SimpleGrid } from "@mantine/core";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 
 import type { OrderedPizza } from "@/shared/api";
 
@@ -27,15 +27,12 @@ export const CatalogPage = () => {
     [catalogQuery.data.catalog, normalizedSearchParams.id],
   );
   const { addItem, decreaseCount, getCorresponding } = useCart();
-  const onRemoveItem = useCallback(
-    (pizza: OrderedPizza) => {
-      const cartItem = getCorresponding(pizza);
-      if (cartItem) {
-        decreaseCount(cartItem);
-      }
-    },
-    [getCorresponding, decreaseCount],
-  );
+  const onRemoveItem = (pizza: OrderedPizza) => {
+    const cartItem = getCorresponding(pizza);
+    if (cartItem) {
+      decreaseCount(cartItem);
+    }
+  };
 
   return (
     <>
