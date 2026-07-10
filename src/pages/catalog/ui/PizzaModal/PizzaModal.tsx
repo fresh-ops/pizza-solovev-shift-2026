@@ -1,4 +1,4 @@
-import { Group, Image, Stack, Text, Modal, type ModalProps } from "@mantine/core";
+import { Image, Stack, Text, Modal, type ModalProps, SimpleGrid } from "@mantine/core";
 import { useTranslation } from "react-i18next";
 
 import type { OrderedPizza, Pizza } from "@/entities/pizza";
@@ -35,8 +35,8 @@ export const PizzaModal = ({
   return (
     <Modal {...props} opened={!!pizza}>
       {pizza && (
-        <Group align="flex-start">
-          <Image src={getAssetUrl(pizza.img)} flex={1} />
+        <SimpleGrid cols={2}>
+          <Image src={getAssetUrl(pizza.img)} />
           <Stack gap="xs" flex={1}>
             <Text size="lg" fw={700}>
               {pizza.name}
@@ -58,7 +58,7 @@ export const PizzaModal = ({
               onDecrease={() => onRemoveItem(orderingPizza)}
             />
           </Stack>
-        </Group>
+        </SimpleGrid>
       )}
     </Modal>
   );
